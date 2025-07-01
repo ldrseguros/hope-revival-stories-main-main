@@ -38,24 +38,42 @@ try {
   throw new Error('Erro na configuração da service account');
 }
 
-const auth = new google.auth.GoogleAuth({
-  credentials,
-  scopes: ['https://www.googleapis.com/auth/drive.file'],
-});
+// Tentar abordagem alternativa com JWT
+let auth;
+try {
+  console.log('Tentando autenticação com JWT...');
+  const { JWT } = require('google-auth-library');
+  
+  auth = new JWT({
+    email: credentials.client_email,
+    key: credentials.private_key,
+    scopes: ['https://www.googleapis.com/auth/drive.file'],
+  });
+  
+  console.log('JWT criado com sucesso');
+} catch (jwtError) {
+  console.error('Erro com JWT, tentando GoogleAuth:', jwtError);
+  
+  // Fallback para GoogleAuth
+  auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: ['https://www.googleapis.com/auth/drive.file'],
+  });
+}
 console.log('Depois do Google Auth');
 
-// Testar autenticação
+// Testar autenticação de forma mais simples
 try {
   console.log('Testando autenticação...');
-  const authClient = await auth.getClient();
-  console.log('Cliente de autenticação obtido com sucesso');
-  
-  // Testar se consegue obter um token
-  const token = await authClient.getAccessToken();
-  console.log('Token obtido com sucesso:', !!token);
+  if (auth.getClient) {
+    const authClient = await auth.getClient();
+    console.log('Cliente de autenticação obtido com sucesso');
+  } else {
+    console.log('Usando JWT diretamente');
+  }
 } catch (authError) {
   console.error('Erro na autenticação:', authError);
-  throw new Error(`Erro de autenticação: ${authError.message}`);
+  // Não vamos falhar aqui, deixar tentar o upload
 }
 
 async function uploadFileToDrive(drive, filePath, originalname, mimetype) {
