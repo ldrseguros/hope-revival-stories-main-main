@@ -13,6 +13,14 @@ const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
 console.log('Antes do Google Auth');
 const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
+
+// Log para diagnosticar a chave privada
+console.log('Chave privada (primeiros 50 chars):', credentials.private_key.substring(0, 50));
+console.log('Chave privada (últimos 50 chars):', credentials.private_key.substring(credentials.private_key.length - 50));
+console.log('Chave privada contém \\n:', credentials.private_key.includes('\\n'));
+console.log('Chave privada contém \n:', credentials.private_key.includes('\n'));
+console.log('Tamanho da chave privada:', credentials.private_key.length);
+
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: ['https://www.googleapis.com/auth/drive.file'],
