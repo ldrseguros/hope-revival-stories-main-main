@@ -134,7 +134,8 @@ const TestimonyForm = () => {
     formDataToSend.append('descricao', formData.description);
 
     try {
-      const response = await fetch('/api/upload', {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/upload`, {
         method: 'POST',
         body: formDataToSend,
       });
