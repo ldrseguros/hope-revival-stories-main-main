@@ -1,9 +1,9 @@
-const { google } = require('googleapis');
-const { PrismaClient } = require('@prisma/client');
-const Busboy = require('busboy');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
+import { google } from 'googleapis';
+import { PrismaClient } from '@prisma/client';
+import Busboy from 'busboy';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 
 console.log('Antes do Prisma');
 const prisma = new PrismaClient();
@@ -42,7 +42,7 @@ try {
 let auth;
 try {
   console.log('Tentando autenticação com JWT...');
-  const { JWT } = require('google-auth-library');
+  const { JWT } = await import('google-auth-library');
   
   auth = new JWT({
     email: credentials.client_email,
@@ -99,7 +99,7 @@ async function uploadFileToDrive(drive, filePath, originalname, mimetype) {
   }
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   try {
     console.log('=== INÍCIO DO HANDLER ===');
     console.log('Método:', req.method);
