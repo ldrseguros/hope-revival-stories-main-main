@@ -12,14 +12,31 @@ console.log('Depois do Prisma');
 const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
 console.log('Antes do Google Auth');
-const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
-
-// Log para diagnosticar a chave privada
-console.log('Chave privada (primeiros 50 chars):', credentials.private_key.substring(0, 50));
-console.log('Chave privada (últimos 50 chars):', credentials.private_key.substring(credentials.private_key.length - 50));
-console.log('Chave privada contém \\n:', credentials.private_key.includes('\\n'));
-console.log('Chave privada contém \n:', credentials.private_key.includes('\n'));
-console.log('Tamanho da chave privada:', credentials.private_key.length);
+let credentials;
+try {
+  credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
+  
+  // Corrigir formatação da chave privada
+  if (credentials.private_key) {
+    // Substituir \\n por \n (quebras de linha duplas por simples)
+    credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+    // Remover espaços extras no início e fim
+    credentials.private_key = credentials.private_key.trim();
+  }
+  
+  // Log para diagnosticar a chave privada
+  console.log('Chave privada (primeiros 50 chars):', credentials.private_key.substring(0, 50));
+  console.log('Chave privada (últimos 50 chars):', credentials.private_key.substring(credentials.private_key.length - 50));
+  console.log('Chave privada contém \\n:', credentials.private_key.includes('\\n'));
+  console.log('Chave privada contém \n:', credentials.private_key.includes('\n'));
+  console.log('Tamanho da chave privada:', credentials.private_key.length);
+  console.log('Chave privada começa com -----BEGIN:', credentials.private_key.startsWith('-----BEGIN PRIVATE KEY-----'));
+  console.log('Chave privada termina com -----END:', credentials.private_key.endsWith('-----END PRIVATE KEY-----'));
+  
+} catch (error) {
+  console.error('Erro ao fazer parse da service account:', error);
+  throw new Error('Erro na configuração da service account');
+}
 
 const auth = new google.auth.GoogleAuth({
   credentials,
