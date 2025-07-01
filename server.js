@@ -14,7 +14,7 @@ console.log('Iniciando servidor Express...');
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'dist')));
+// app.use(express.static(path.join(__dirname, 'dist'))); // REMOVIDO PARA DEPLOY API NO RAILWAY
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -28,10 +28,10 @@ app.post('/api/upload', (req, res, next) => {
   require('./api/upload.js')(req, res, next);
 });
 
-// Serve React app for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// REMOVIDO: Serve React app para todas as outras rotas
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
