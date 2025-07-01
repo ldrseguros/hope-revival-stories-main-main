@@ -44,6 +44,20 @@ const auth = new google.auth.GoogleAuth({
 });
 console.log('Depois do Google Auth');
 
+// Testar autenticação
+try {
+  console.log('Testando autenticação...');
+  const authClient = await auth.getClient();
+  console.log('Cliente de autenticação obtido com sucesso');
+  
+  // Testar se consegue obter um token
+  const token = await authClient.getAccessToken();
+  console.log('Token obtido com sucesso:', !!token);
+} catch (authError) {
+  console.error('Erro na autenticação:', authError);
+  throw new Error(`Erro de autenticação: ${authError.message}`);
+}
+
 async function uploadFileToDrive(drive, filePath, originalname, mimetype) {
   const fileMetadata = {
     name: originalname,
@@ -69,6 +83,7 @@ async function uploadFileToDrive(drive, filePath, originalname, mimetype) {
 
 module.exports = async function handler(req, res) {
   try {
+    console.log('=== INÍCIO DO HANDLER ===');
     console.log('Método:', req.method);
     console.log('Variáveis de ambiente:', {
       GOOGLE_SERVICE_ACCOUNT: !!process.env.GOOGLE_SERVICE_ACCOUNT,
@@ -77,10 +92,16 @@ module.exports = async function handler(req, res) {
     });
 
     if (req.method !== 'POST') {
+      console.log('Método não permitido:', req.method);
       res.status(405).json({ message: 'Método não permitido' });
       return;
     }
+    
     if (!FOLDER_ID || !process.env.GOOGLE_SERVICE_ACCOUNT) {
+      console.log('Variáveis de ambiente faltando:', {
+        FOLDER_ID: !!FOLDER_ID,
+        GOOGLE_SERVICE_ACCOUNT: !!process.env.GOOGLE_SERVICE_ACCOUNT
+      });
       res.status(500).json({ message: 'Variáveis de ambiente não configuradas' });
       return;
     }
@@ -147,7 +168,22 @@ module.exports = async function handler(req, res) {
 
     req.pipe(busboy);
   } catch (error) {
-    console.error('Erro global na função upload:', error);
-    res.status(500).json({ message: error.message });
+    console.error('=== ERRO GLOBAL NA FUNÇÃO UPLOAD ===');
+    console.error('Mensagem:', error.message);
+    console.error('Stack:', error.stack);
+    console.error('Nome do erro:', error.name);
+    
+    // Se for erro de autenticação, retornar erro específico
+    if (error.message.includes('autenticação') || error.message.includes('JWT')) {
+      res.status(401).json({ 
+        message: 'Erro de autenticação com Google Drive',
+        details: error.message 
+      });
+    } else {
+      res.status(500).json({ 
+        message: 'Erro interno do servidor',
+        details: error.message 
+      });
+    }
   }
 } 
