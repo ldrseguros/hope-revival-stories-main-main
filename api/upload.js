@@ -7,10 +7,10 @@ const path = require('path');
 
 const prisma = new PrismaClient();
 
-const KEYFILEPATH = process.env.GOOGLE_SERVICE_ACCOUNT;
 const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
-const credentials = JSON.parse(fs.readFileSync(KEYFILEPATH, 'utf-8'));
+// Lê o conteúdo JSON diretamente da variável de ambiente
+const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: ['https://www.googleapis.com/auth/drive.file'],
@@ -52,7 +52,7 @@ module.exports = async function handler(req, res) {
       res.status(405).json({ message: 'Método não permitido' });
       return;
     }
-    if (!FOLDER_ID || !KEYFILEPATH) {
+    if (!FOLDER_ID || !process.env.GOOGLE_SERVICE_ACCOUNT) {
       res.status(500).json({ message: 'Variáveis de ambiente não configuradas' });
       return;
     }
