@@ -5,16 +5,19 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
+console.log('Antes do Prisma');
 const prisma = new PrismaClient();
+console.log('Depois do Prisma');
 
 const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
-// Lê o conteúdo JSON diretamente da variável de ambiente
+console.log('Antes do Google Auth');
 const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: ['https://www.googleapis.com/auth/drive.file'],
 });
+console.log('Depois do Google Auth');
 
 async function uploadFileToDrive(drive, filePath, originalname, mimetype) {
   const fileMetadata = {
