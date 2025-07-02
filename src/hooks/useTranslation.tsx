@@ -47,7 +47,7 @@ const translations = {
     story: {
       title: 'Uma História de Superação',
       beforeTitle: 'Antes do Acidente',
-      beforeDesc: 'Jardel trabalhou 15 anos com Bruno e Marrone, como assessor executivo do Marrone. O acidente foi no décimo segundo ano de parceria. Era uma carreira próspera no meio musical.',
+      beforeDesc: 'Jardel trabalhou 15 anos com Bruno e Marrone, como assessor exclusivo do Marrone. O acidente foi no décimo segundo ano de parceria. Era uma carreira próspera no meio musical.',
       accidentTitle: 'O Acidente',
       accidentDesc: 'Um acidente de helicóptero mudou tudo. O que parecia ser o fim se tornou o início de uma jornada de descoberta e transformação pessoal.',
       afterTitle: 'A Transformação',
