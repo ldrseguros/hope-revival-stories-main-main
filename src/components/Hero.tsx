@@ -1,65 +1,75 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Star, BookOpen, MessageCircle } from 'lucide-react';
 
 const Hero = () => {
   const { t } = useTranslation();
 
   return (
     <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with helicopter crash image */}
+      {/* Background com imagem opaca e blur */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 via-blue-900/85 to-green-800/90"></div>
-      </div>
+        className="absolute inset-0 w-full h-full bg-cover bg-center blur-sm scale-105"
+        style={{
+          backgroundImage: "url('/helicoptero_acidente.jpg')",
+          opacity: 0.38,
+          zIndex: 1
+        }}
+      />
+      {/* Overlay preto translúcido para contraste extra */}
+      <div className="absolute inset-0 z-10" style={{ background: 'rgba(0,0,0,0.38)' }} />
+      {/* Overlay azul petróleo com gradiente para profundidade */}
+      <div className="absolute inset-0 z-20" style={{
+        background: 'linear-gradient(120deg, rgba(30,58,138,0.60) 60%, rgba(76,29,149,0.55) 100%)'
+      }} />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
+      <div className="relative z-30 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
-          {/* Star icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 gradient-joy rounded-full mb-8">
-            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
+          {/* Ícone minimalista */}
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-8" style={{ background: 'rgba(249,115,22,0.18)' }}>
+            <Star className="w-8 h-8 text-[#4C1D95]" strokeWidth={2} />
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-[0_4px_32px_rgba(0,0,0,0.45)]">
             {t('hero.title')}
           </h1>
           
-          <p className="text-xl md:text-2xl text-green-100 mb-4 font-medium">
+          <p className="text-xl md:text-2xl text-white mb-4 font-medium drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
             {t('hero.subtitle')}
           </p>
           
-          <p className="text-lg text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-100 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.25)]">
             {t('hero.description')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-semibold px-8 py-3 rounded-full text-lg shadow-lg transform hover:scale-105 transition-all duration-200 btn-hover-lift"
+              className="transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-xl"
               onClick={() => document.getElementById('projeto')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              📖 {t('hero.startProject')}
+              >
+              <BookOpen className="w-6 h-6 text-white" strokeWidth={2} />
+              {t('hero.startProject')}
             </Button>
             
             <Button 
               size="lg"
-              className="bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-semibold px-8 py-3 rounded-full text-lg shadow-lg transform hover:scale-105 transition-all duration-200 btn-hover-lift"
+              className="transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-xl"
               onClick={() => document.getElementById('participar')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              🎥 {t('hero.sendTestimony')}
+              <MessageCircle className="w-6 h-6 text-white" strokeWidth={2} />
+              {t('hero.sendTestimony')}
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+      {/* Scroll indicator minimalista */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-30">
+        <div className="w-6 h-10 border-2 border-[#4C1D95]/30 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-[#4C1D95]/60 rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
     </section>

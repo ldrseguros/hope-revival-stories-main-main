@@ -12,19 +12,12 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #4C1D95aa);
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -35,8 +28,11 @@
 
 .card {
   padding: 2em;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px 0 rgba(76,29,149,0.06);
 }
 
 .read-the-docs {
-  color: #888;
+  color: #374151;
 }
