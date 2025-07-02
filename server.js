@@ -1,8 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const path = require('path');
-const uploadHandler = require('./api/upload.js');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import uploadHandler from './api/upload.js';
 
 dotenv.config();
 
@@ -25,7 +26,7 @@ app.get('/api/health', (req, res) => {
 // API Routes
 app.post('/api/upload', (req, res, next) => {
   console.log('Upload chamado');
-  require('./api/upload.js')(req, res, next);
+  uploadHandler(req, res, next);
 });
 
 // REMOVIDO: Serve React app para todas as outras rotas

@@ -1,6 +1,9 @@
-import { google } from 'googleapis';
-import { PrismaClient } from '@prisma/client';
-import Busboy from 'busboy';
+import pkg from 'googleapis';
+const { google } = pkg;
+import pkg3 from '@prisma/client';
+const { PrismaClient } = pkg3;
+import pkg2 from 'busboy';
+const Busboy = pkg2;
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
