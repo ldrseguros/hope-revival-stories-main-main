@@ -67,7 +67,7 @@ const translations = {
       },
       specs: {
         title: 'Especificações do Vídeo',
-        duration: '1-4 minutos',
+        duration: 'Mínimo 1 minuto e 30 segundos',
         format: 'MP4, MOV, AVI - VERTICAL',
         quality: 'HD (1080p)',
         size: 'Até 500MB'
