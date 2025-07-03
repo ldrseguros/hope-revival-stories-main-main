@@ -47,14 +47,19 @@ const StorySection = () => {
           {/* Right side - Images */}
           <div className="flex flex-col items-center justify-center gap-8">
             <img
-              src="/IMG_4125.PNG"
-              alt="Jardel em um helicóptero"
+              src="/jardel_marrone.jpg"
+              alt="Jardel e Marrone"
               className="w-full max-w-xs rounded-2xl shadow-2xl transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-cyan-500/50"
             />
             <img
-              src="/IMG_4126.PNG"
-              alt="Jardel com sua família"
+              src="/jardel_bruno.jpg"
+              alt="Jardel e Bruno"
               className="w-full max-w-xs rounded-2xl shadow-2xl transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-purple-500/50"
+            />
+            <img
+              src="/IMG_4125.PNG"
+              alt="Jardel com sua família"
+              className="w-full max-w-xs rounded-2xl shadow-2xl transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-orange-500/50"
             />
           </div>
         </div>
